@@ -29,19 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
         web.loadUrl("https://www.google.com/");
         web.setWebViewClient(new WebViewClient());
-        send.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                String url = inputURL.getText().toString();
 
-                if(!url.startsWith("http://")){
-                    url = "http://";
-                }
-                web.loadUrl(url);
-                InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.hideSoftInputFromWindow(web.getWindowToken(), 0);
-            }
-        });
     }
     @Override
     public void onBackPressed(){
@@ -49,5 +37,17 @@ public class MainActivity extends AppCompatActivity {
             web.goBack();
         else
             super.onBackPressed();
+    }
+
+    public void onClickSend(View view) {
+        inputURL = (EditText) findViewById(R.id.autoCompleteTextView);
+        String url = inputURL.getText().toString();
+
+        if(!url.startsWith("https://")){
+            url = "https://"+url;
+        }
+        web.loadUrl(url);
+        InputMethodManager inputMethodManager = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        inputMethodManager.hideSoftInputFromWindow(web.getWindowToken(), 0);
     }
 }
